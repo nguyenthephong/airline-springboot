@@ -1,9 +1,7 @@
 package com.faber.airline.flight;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-
 import javax.persistence.Column;
 import javax.persistence.Table;
 import javax.persistence.Entity;
