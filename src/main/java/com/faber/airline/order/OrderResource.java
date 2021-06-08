@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 public class OrderResource {
 
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	@CrossOrigin
 	@ApiOperation("Get all orders")
 	@GetMapping(value = "/orders")
 	public List<Order> getAllOrders() {
 		return orderRepository.findAll();
 	}
-	
-	@CrossOrigin
+
 	@SneakyThrows
 	@ApiOperation("Get a order by id")
 	@RequestMapping(value = "/orders/{orderId}", method = RequestMethod.GET)
@@ -38,24 +37,28 @@ public class OrderResource {
 		return order.get();
 	}
 	
-	@CrossOrigin
 	@SneakyThrows
 	@ApiOperation("Create a new order")
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
-	public Order createOrder(@RequestBody Order orderRequest) {
+	public Order createOrder(@RequestBody OrderCriteriaRequest orderRequest) {
 		try {
-			Order order = orderRepository.save(orderRequest);
-			return order;
+			Order order = new Order();
+			order.setTimeOfOrder(orderRequest.getTimeOfOrder());
+			order.setReturnType(orderRequest.getReturnType());
+			order.setFlight(orderRequest.getFlight());
+			order.setTotalPeople(orderRequest.getTotalPeople());
+			order.setTotalPrice(orderRequest.getTotalPrice());
+			Order resOrder = orderRepository.save(order);
+			return resOrder;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 	
-	@CrossOrigin
 	@SneakyThrows
 	@ApiOperation("Update a new order")
 	@RequestMapping(value = "/orders/{orderId}", method = RequestMethod.PUT)
-	public void updateFlight(@RequestBody Order orderRequest, @PathVariable("orderId") Integer orderId) {	
+	public void updateFlight(@RequestBody OrderCriteriaRequest orderRequest, @PathVariable("orderId") Integer orderId) {	
 		try {
 			Optional<Order> opt = orderRepository.findById(orderId);
 			if (!opt.isPresent())
@@ -72,8 +75,7 @@ public class OrderResource {
 			e.printStackTrace();
 		}
 	}
-	
-	@CrossOrigin
+
 	@SneakyThrows
 	@ApiOperation("Delete a order")
 	@RequestMapping(value = "/orders/{orderId}", method = RequestMethod.DELETE)

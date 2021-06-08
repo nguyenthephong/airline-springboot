@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 public class AirportResource {
 	
 	@Autowired
 	private AirportRepository airportRepository;
 	
-	@CrossOrigin
 	@ApiOperation("Get all airports")
 	@RequestMapping(value = "/airports", method = RequestMethod.GET)
 	public List<Airport> getAllAirports() {
@@ -25,7 +25,6 @@ public class AirportResource {
 	}
 	
 	@SneakyThrows
-	@CrossOrigin
 	@ApiOperation("Get a airport by id")
 	@RequestMapping(value = "/airports/{airportId}", method = RequestMethod.GET)
 	public Airport getAirportById(@PathVariable("airportId") Integer airportId) {
