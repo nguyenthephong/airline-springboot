@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.faber.airline.flight.Flight;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
