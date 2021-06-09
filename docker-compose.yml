@@ -27,23 +27,23 @@ services:
             - webnet
         restart: always
 
-    # airline:
-    #     container_name: airline_api
-    #     image: airline
-    #     build:
-    #       context: .
-    #       dockerfile: Dockerfile
-    #     restart: on-failure
-    #     volumes:
-    #       - .:/airline
-    #     ports:
-    #       - 8081:8081
-    #     environment:
-    #         SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Faber?autoReconnect=true&useSSL=false
-    #     links:
-    #       - mysql
-    #     networks:
-    #         - webnet
+    airline:
+        container_name: airline_api
+        image: airline
+        build:
+          context: .
+          dockerfile: Dockerfile
+        restart: on-failure
+        volumes:
+          - .:/airline
+        ports:
+          - 8081:8081
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Faber?autoReconnect=true&useSSL=false
+        links:
+          - mysql
+        networks:
+          - webnet
 networks:
     webnet:
         name: webnet
